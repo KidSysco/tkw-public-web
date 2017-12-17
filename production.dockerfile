@@ -12,7 +12,8 @@ FROM node:9.2.1
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
-COPY package*.json ./
+#COPY package*.json ./
+RUN git clone https://github.com/KidSysco/tkw-public-web.git /Users/KidSysco/Documents/Node/tkw-public-web-git/
 
 RUN npm install pm2 -g
 
@@ -20,7 +21,6 @@ RUN npm install pm2 -g
 RUN npm install --only=production
 
 # Bundle app source
-RUN git clone https://github.com/KidSysco/tkw-public-web.git /Users/KidSysco/Documents/Node/tkw-public-web-git
 #COPY . .
 
 EXPOSE 8080
