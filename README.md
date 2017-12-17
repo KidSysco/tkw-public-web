@@ -1,5 +1,13 @@
 # tkw-public-web
-The Known World persistent Neverwinter Nights game server public website.
+The Known World persistent Neverwinter Nights game server public website. The site is run using Node.js in a Linux based Docker container.
+
+![](http://mherman.org/assets/img/blog/node-docker-logo.png)
+
+Visit the team slack channel or the facebook page for more info...
+
+https://tkw-rp.slack.com/messages/
+
+https://www.facebook.com/TKW.RP/
 
 # Running The Container For Development Use
 Developing the site using a docker container allows us to work on the site using the exact same machine that runs on production.
@@ -29,7 +37,6 @@ docker pull kidsysco/tkw-public-web:latest
 6. Run the docker image you just pulled with params for development. This command will use the Linux NFS to mount a folder on your host filesystem to the path where the app normally runs inside the container, /app/. This effectively overwrites the app code in the container allowing your filesystem to provide instead. Replace the path in the target param to fit your workstation in the run command below. The -p switch specifies port mapping as follows: HostPort:ContainerPort.
 
 ```
-Dev:
 docker run -p 8080:8080 -d --mount type=bind,source="$(pwd)"/,target=/Users/KidSysco/Documents/Node/tkw-public-web-git/ kidsysco/tkw-public-web:latest
 
 ```
@@ -38,22 +45,7 @@ docker run -p 8080:8080 -d --mount type=bind,source="$(pwd)"/,target=/Users/KidS
 
 8. Open public/index.html and public/site.css. Edit these client-side files with you editor of choice. Save the changes. Refresh the browser to see the changes instantly.
 
-9. Open server.js, remove comments from line 8, comment out line 7, and save. This will make a dramatic server side change you should notice when refreshing the browser. Below is the new code for server.js.
-
-```
-'use strict';
-
-var express = require('express'),
-    app = module.exports = express(),
-    webServerPort = 8080;
-
-//app.use(express.static('public'));
-app.get('/', (req, res) => res.send('Hello World!'));
-app.listen(webServerPort);
-
-console.log('Listening on port ' + webServerPort);
-
-```
+9. Open server.js, remove comments from line 10, comment out line 9, and save. This will make a dramatic server side change you should notice when refreshing the browser.
 
 10. Make any changes needed to the code. Commit your changes. Push them to origin/master or create a merge request.
 
@@ -117,4 +109,4 @@ In order to delete all containers, use the following command...
 docker rm $(docker ps -a -q)
 ```
 
-Warning: This will destroy all your images and containers. It will not be possible to restore them!
+Warning: This will destroy all your images and containers.

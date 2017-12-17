@@ -1,43 +1,18 @@
 {
   "apps": [
-    // Application #1 in the array.
     {
-      // The app name.
       "name": "tkw-public-web",
-
-      // The name of the initial starting script.
       "script": "server.js",
-
-      // Pass args as more strings using this array.
       "args": [],
-
-      // Makes it feel like watch is enabled here even in production use. 
-      // Not cool, need to figure this out.
       "watch": true,
-
-      // An array of folders to NOT watch.
       "ignore_watch": [
         "node_modules"
       ],
-
-      // These are watch options passed on to Chokidar, the file system 
-      // watching module.
       "watch_options": {
-      
-        // follow symbolic links and watch them too? ouch!
         "followSymlinks": false,
-
-        // Use this for NFS mounts or Bind Mounts in Docker.
         "usePolling": true,
-
-        // Control the interval at which polling takes place if in use.
         "interval": 400
-      },
-      
-      // Command Working Directory? perhaps? The app folder I suppose?
-      // Docker created this path based on the directory I built from on my mac.
-      "cwd": "/Users/KidSysco/Documents/Node/tkw-public-web-git"
-      
+      }
     }
   ]
 }

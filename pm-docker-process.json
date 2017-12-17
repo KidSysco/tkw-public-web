@@ -1,29 +1,13 @@
 {
     "apps": [
-      // Application #1 in the array.
       {
-        // The app name.
         "name": "tkw-public-web",
-  
-        // The name of the initial starting script.
         "script": "server.js",
-  
-        // Pass args as more strings using this array.
         "args": [],
-  
-        // Makes it feel like watch is enabled here even in production use. 
-        // Not cool, need to figure this out.
         "watch": false,
-  
-        // An array of folders to NOT watch.
         "ignore_watch": [
           "node_modules"
-        ],
-        
-        // Command Working Directory? perhaps? The app folder I suppose?
-        // Docker created this path based on the directory I built from on my mac.
-        "cwd": "/Users/KidSysco/Documents/Node/tkw-public-web-git"
-        
+        ]
       }
     ]
   }
