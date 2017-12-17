@@ -6,9 +6,12 @@
   "author": "KidSysco",
   "license": "MIT",
   "scripts": {
-    "start": "pm2-dev start process.json"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.16.2"
+  },
+  "engines": {
+    "node": "9.2.1"
   }
 }
