@@ -2,7 +2,7 @@
 
 var express = require('express'),
     app = module.exports = express(),
-    webServerPort = 8080;
+    webServerPort = 80;
 
 app.use(express.static('public'));
 //app.get('/', (req, res) => res.send('Hello World!'));
