@@ -2,7 +2,7 @@
 
 var express = require('express'),
     app = module.exports = express(),
-    webServerPort = 5000;
+    webServerPort = 8080;
 
 app.set('port', (process.env.PORT || webServerPort))
 
