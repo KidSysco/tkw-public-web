@@ -6,7 +6,7 @@
   "author": "KidSysco",
   "license": "MIT",
   "scripts": {
-    "start": "node server.js"
+    "start": "pm2-dev start process.json"
   },
   "dependencies": {
     "express": "^4.16.2"
