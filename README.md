@@ -57,9 +57,7 @@ console.log('Listening on port ' + webServerPort);
 
 10. Make any changes needed to the code. Commit your changes. Push them to origin/master or create a merge request.
 
-11. Push your changes or create a Merge Request.
-
-12. The next time the production container is re-built, the latest code will be pulled from git.
+11. The next time the production container is re-built, the latest code will be pulled from git.
 
 # Running and Updating the Container for Production Use
 
