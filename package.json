@@ -1,17 +1,21 @@
 {
-  "name": "tkw-public-web",
-  "version": "1.0.0",
-  "description": "The Known World persistent Neverwinter Nights game server public website.",
-  "main": "server.js",
-  "author": "KidSysco",
-  "license": "MIT",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.16.2"
-  },
-  "engines": {
-    "node": "9.2.1"
-  }
+    "name": "tkw-public-web",
+    "version": "1.0.0",
+    "description": "The Known World persistent Neverwinter Nights game server public website.",
+    "main": "server.js",
+    "author": "KidSysco",
+    "license": "MIT",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^4.16.2"
+    },
+    "engines": {
+        "node": "9.2.1"
+    },
+    "devDependencies": {
+        "mocha": "^4.0.1",
+        "qunit": "^2.4.1"
+    }
 }
