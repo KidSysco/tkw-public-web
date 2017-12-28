@@ -9,7 +9,10 @@
         "start": "node server.js"
     },
     "dependencies": {
-        "express": "^4.16.2"
+        "body-parser": "^1.18.2",
+        "express": "^4.16.2",
+        "vue": "^2.5.13",
+        "vue-server-renderer": "^2.5.13"
     },
     "engines": {
         "node": "9.2.1"

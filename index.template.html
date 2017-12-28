@@ -3,11 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>The Known World</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./site.css">
-    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.4.1.css">
+    <link rel="stylesheet" href="./site.css"> {{{ css }}}
 
     <!-- access to the HEAD element -->
     <meta charset="utf-8">
@@ -164,32 +163,31 @@
                     <form id="Application" method="post" action="/apply">
                         <div class="modal-header">
                             <h5 class="modal-title">Apply For Access</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button id="ModalCloseIcon" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <p>Provide your name and email address. A DM will contact you soon.</p>
-                            <p>Name: <br /><input type="text" id="name" v-model="name" maxlength="35" v-on:keyup="getIsValidName" class="wide-input" /></p>
+                            <p>Name: <br /><input type="text" id="name" name="name" v-model="name" maxlength="35" v-on:keyup="getIsValidName" class="wide-input" /></p>
                             <div v-if="!isValidName" class="alert alert-danger alert-dismissible fade show" role="alert">
                                 Please specify your name.
                             </div>
-                            <p>Email: <br /><input type="text" id="email" v-model="email" maxlength="128" v-on:keyup="getIsValidEmail" class="wide-input" /></p>
+                            <p>Email: <br /><input type="text" id="email" name="email" v-model="email" maxlength="128" v-on:keyup="getIsValidEmail" class="wide-input" /></p>
                             <div v-if="!isValidEmail" class="alert alert-danger alert-dismissible fade show" role="alert">
                                 Please use a valid email address.
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" v-on:click="apply">Apply</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id="ModalApply" class="btn btn-primary" v-on:click="apply">Apply</button>
+                            <button type="button" id="ModalClose" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
-        <div id="qunit"></div>
-        <div id="qunit-fixture"></div>
+        <!--vue-ssr-outlet-->
 
         <footer>
             <p class="float-right"><a href="#">Back to top</a></p>
@@ -199,20 +197,13 @@
     </div>
 
 </body>
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
-
-<!-- Development version of Vue with qUnit Testing Framework -->
-<script src="./vue.js"></script>
-<script src="https://code.jquery.com/qunit/qunit-2.4.1.js"></script>
-
-<!-- Production version of Vue from CDN
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
- -->
-
+{{{ javaScriptIncludes }}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>
+
 <script language="javascript">
     $(document).on('click', '.navbar-collapse', function(e) {
         if ($(e.target).is('a')) {
@@ -239,15 +230,33 @@
                 return this.isValidName;
             },
             apply: function() {
+                var formData = {
+                    "name": applicationForm.name,
+                    "email": applicationForm.email
+                };
+
                 if (this.getIsValidName() && this.getIsValidEmail()) {
-                    alert('Valid, submit form.');
+                    $.ajax({
+                        url: '/apply',
+                        dataType: "json",
+                        method: "POST",
+                        data: JSON.stringify(formData),
+                        success: function(data) {
+                            alert(data.complete);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            alert('error ' + textStatus + " " + errorThrown);
+                        }
+                    });
+
                 } else {
-                    alert('Invalid, do not submit form.');
+                    return false;
                 }
             }
         }
     });
 </script>
-<script src="./client-tests.js"></script>
+
+{{{ unitTests }}}
 
 </html>

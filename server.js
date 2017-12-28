@@ -1,21 +1,80 @@
 'use strict';
 
-var express = require('express'),
-    app = module.exports = express(),
-    webServerPort = 8080;
+const express = require('express'),
+    server = module.exports = express(),
+    bodyParser = require('body-parser'),
+    port = 8080,
+    Vue = require('vue'),
+    renderer = require('vue-server-renderer').createRenderer({ template: require('fs').readFileSync('./index.template.html', 'utf-8') });
 
-app.set('port', (process.env.PORT || webServerPort));
+// Enable this to simulate production mode.
+// process.env.NODE_ENV = 'production';
 
-app.use(express.static('public'));
-//app.get('/', (req, res) => res.send('Hello World!'));
+server.set('port', (process.env.PORT || port));
 
-app.all('/apply', function(req, res, next) {
-    var response = 'Applying for access';
-    console.log(response);
-    res.send(response);
+// Serve content from the public folder through the web root.
+server.use(express.static('public'));
+
+// create application/json parser 
+var jsonParser = bodyParser.json();
+
+// create application/x-www-form-urlencoded parser 
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+server.use(bodyParser.json()); // support json encoded bodies
+server.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+// *** Routes ***
+
+// Default Single Page Application Route
+server.get('/', (req, res) => {
+    const app = new Vue({
+            data: {
+
+            },
+            template: '<div><div id="qunit"></div><div id="qunit-fixture"></div></div>'
+        }),
+        context = {
+            title: 'TKW Dev Mode',
+            css: '<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.4.1.css">',
+            javaScriptIncludes: `<script src="./vue.js"></script>
+                 <script src="https://code.jquery.com/qunit/qunit-2.4.1.js"></script>`,
+            unitTests: '<script src="./client-tests.js"></script>'
+
+        };
+
+    if (process.env.NODE_ENV === 'production') {
+        context.title = 'The Known World';
+        context.css = '';
+        context.javaScriptIncludes = '<script src="https://cdn.jsdelivr.net/npm/vue"></script>';
+        context.unitTests = '';
+    }
+
+
+    renderer.renderToString(app, context, (err, html) => {
+        if (err) {
+            res.status(500).end('Internal Server Error - ' + err + ' - ' + html);
+            return;
+        }
+
+        res.end(html);
+    });
 });
 
+// Handle the apply for access function by sending email to admins.
+server.post('/apply', function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({ complete: true }));
+});
 
-app.listen(app.get('port'));
+// Redirect all other routes to root.
+server.get('*', function(req, res) {
+    res.writeHead(302, {
+        'Location': '/'
+    });
+    res.end();
+});
 
-console.log('Listening on port ' + app.get('port'));
+server.listen(server.get('port'));
+
+console.log('Listening on port ' + server.get('port'));

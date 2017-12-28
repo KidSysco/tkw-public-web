@@ -1,4 +1,5 @@
-var func = 'function';
+var func = 'function',
+    click = $.Event('click');
 
 QUnit.test("JavaScript Library Status", function(assert) {
     var isBootStrapModalEnabled = (typeof $().modal == func),
@@ -27,15 +28,38 @@ QUnit.test("applicationForm Vue Object Members", function(assert) {
     assert.equal(emailValidationMethodReady, true, 'applicationForm.isValidEmail() method is ready.');
     assert.equal(nameValidationMethodReady, true, 'applicationForm.isValidName() method is ready.');
     assert.equal(applyMethodReady, true, 'applicationForm.apply() method is ready.');
+
+    assert.equal(applicationForm.getIsValidName(), false, 'applicationForm.getIsValidName() method returned false validating a blank name.');
+    assert.equal(applicationForm.getIsValidEmail(), false, 'applicationForm.getIsValidEmail() method returned false validating a blank email.');
+
+    applicationForm.name = 'Ryan';
+    applicationForm.email = 'kidsysco@hotmail.com';
+    assert.equal(applicationForm.getIsValidName(), true, 'applicationForm.getIsValidName() method returned true validating a valid name.');
+    assert.equal(applicationForm.getIsValidEmail(), true, 'applicationForm.getIsValidEmail() method returned true validating a valid email.');
 });
 
-QUnit.test("Application Unit Tests", function(assert) {
+QUnit.test("Application UI Unit Tests", function(assert) {
     var done,
-        openAppFormLink = $('#OpenApplicationFormLink');
+        openAppFormLink = $('#OpenApplicationFormLink'),
+        appFormModal = $('#ApplicationModal');
 
-    openAppFormLink.trigger($.Event('click'));
+    openAppFormLink.trigger(click);
+    assert.equal(appFormModal.hasClass('show'), true, 'The modal is showing after clicking the #OpenApplicationFormLink button.');
 
-    assert.equal($('#ApplicationModal').hasClass('show'), true, 'The modal is showing after clicking the #OpenApplicationFormLink button.');
+    appFormModal.trigger(click);
+    assert.equal(appFormModal.hasClass('show'), false, 'The modal is hidden after clicking outside the modal window.');
+
+    openAppFormLink.trigger(click);
+    assert.equal(appFormModal.hasClass('show'), true, 'The modal is showing after clicking the #OpenApplicationFormLink button.');
+
+    $('#ModalClose').trigger(click);
+    assert.equal(appFormModal.hasClass('show'), false, 'The modal is hidden after clicking modal close button.');
+
+    openAppFormLink.trigger(click);
+    assert.equal(appFormModal.hasClass('show'), true, 'The modal is showing after clicking the #OpenApplicationFormLink button.');
+
+    $('#ModalCloseIcon').trigger(click);
+    assert.equal(appFormModal.hasClass('show'), false, 'The modal is hidden after clicking modal close icon in the header.');
 
 
 });
