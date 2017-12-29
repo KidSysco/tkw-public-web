@@ -39,7 +39,8 @@ server.get('/', (req, res) => {
             css: '<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.4.1.css">',
             javaScriptIncludes: `<script src="./vue.js"></script>
                  <script src="https://code.jquery.com/qunit/qunit-2.4.1.js"></script>`,
-            unitTests: '<script src="./client-tests.js"></script>'
+            unitTests: '<script src="./client-tests.js"></script>',
+            applicationErrorMessage: ''
 
         };
 

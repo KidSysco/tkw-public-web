@@ -157,9 +157,10 @@
 
         <hr class="featurette-divider">
 
-        <div class="modal" tabindex="-1" role="dialog" id="ApplicationModal">
+        <div class="modal fade" tabindex="-1" role="dialog" id="ApplicationModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
+
                     <form id="Application" method="post" action="/apply">
                         <div class="modal-header">
                             <h5 class="modal-title">Apply For Access</h5>
@@ -168,14 +169,38 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Provide your name and email address. A DM will contact you soon.</p>
-                            <p>Name: <br /><input type="text" id="name" name="name" v-model="name" maxlength="35" v-on:keyup="getIsValidName" class="wide-input" /></p>
-                            <div v-if="!isValidName" class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Please specify your name.
+                            <div v-if="!isFetchingData">
+                                <div v-if="!isApplicationSent">
+                                    <p>Provide your name and email address. A DM will contact you soon.</p>
+                                    <p>Name: <br /><input type="text" id="name" name="name" v-model="name" maxlength="35" v-on:keyup="getIsValidName" class="wide-input" /></p>
+                                    <div v-if="!isValidName" class="alert alert-warning fade show" role="alert">
+                                        Please specify your name.
+                                    </div>
+                                    <p>Email: <br /><input type="text" id="email" name="email" v-model="email" maxlength="128" v-on:keyup="getIsValidEmail" class="wide-input" /></p>
+                                    <div v-if="!isValidEmail" class="alert alert-warning fade show" role="alert">
+                                        Please use a valid email address.
+                                    </div>
+                                </div>
+
+                                <div v-if="isApplicationSent">
+                                    <div v-if="isApplicationSuccessfull" class="alert alert-success fade show" role="alert">
+                                        <p>
+                                            <strong>Your application has been sent.</strong> Congradulations and welcome aboard! A DM will contact you at the email address provided. We look forward to seeing you on the TKW server!
+                                        </p>
+                                    </div>
+
+                                    <div v-if="!isApplicationSuccessfull" class="alert alert-danger fade show" role="alert">
+                                        <p><strong>Error</strong> Something went wrong with the application service. Please contact a DM on <a href="https://tkw-rp.slack.com">Slack</a> and let someone know about this outage. </p>
+                                        <p>The error message is: {{ applicationErrorMessage }}</p>
+                                    </div>
+                                </div>
                             </div>
-                            <p>Email: <br /><input type="text" id="email" name="email" v-model="email" maxlength="128" v-on:keyup="getIsValidEmail" class="wide-input" /></p>
-                            <div v-if="!isValidEmail" class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Please use a valid email address.
+                            <div id="FetchingData" v-if="isFetchingData">
+                                <div class="spinner">
+                                    <div class="bounce1"></div>
+                                    <div class="bounce2"></div>
+                                    <div class="bounce3"></div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -183,6 +208,7 @@
                             <button type="button" id="ModalClose" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -199,25 +225,37 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
+
 {{{ javaScriptIncludes }}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>
 
 <script language="javascript">
+    // Handles the click event on links in the navbar to close the mobile menu if it is in use.
     $(document).on('click', '.navbar-collapse', function(e) {
         if ($(e.target).is('a')) {
             $(this).collapse('hide');
         }
     });
 
+    // Handles the hidden event on the BootStrap modal.
+    $(document).on('hidden.bs.modal', function() {
+        applicationForm.isApplicationSent = false;
+    });
+
+    // The Vue Model for submitting a Application Form to Play.
     var applicationForm = new Vue({
         el: '#ApplicationModal',
         data: {
             name: '',
             email: '',
             isValidEmail: true,
-            isValidName: true
+            isValidName: true,
+            isApplicationSent: false,
+            isApplicationSuccessfull: false,
+            isFetchingData: false,
+            applicationErrorMessage: ''
         },
         methods: {
             getIsValidEmail: function() {
@@ -236,6 +274,7 @@
                 };
 
                 if (this.getIsValidName() && this.getIsValidEmail()) {
+                    this.isFetchingData = true;
                     $.ajax({
                         url: '/apply',
                         dataType: "json",
@@ -243,13 +282,21 @@
                         data: JSON.stringify(formData),
                         success: function(data) {
                             alert(data.complete);
+                            applicationForm.isFetchingData = false;
+                            applicationForm.isApplicationSent = true;
+                            applicationForm.isApplicationSuccessfull = true;
+
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
-                            alert('error ' + textStatus + " " + errorThrown);
+                            applicationForm.isFetchingData = false;
+                            applicationForm.isApplicationSent = true;
+                            applicationForm.isApplicationSuccessfull = false;
+
+                            applicationForm.applicationErrorMessage = textStatus + " " + errorThrown;
                         }
                     });
-
                 } else {
+                    this.isApplicationSent = false;
                     return false;
                 }
             }
