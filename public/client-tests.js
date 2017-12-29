@@ -36,6 +36,9 @@ QUnit.test("applicationForm Vue Object Members", function(assert) {
     applicationForm.email = 'kidsysco@hotmail.com';
     assert.equal(applicationForm.getIsValidName(), true, 'applicationForm.getIsValidName() method returned true validating a valid name.');
     assert.equal(applicationForm.getIsValidEmail(), true, 'applicationForm.getIsValidEmail() method returned true validating a valid email.');
+
+    applicationForm.name = '';
+    applicationForm.email = '';
 });
 
 QUnit.test("Application UI Unit Tests", function(assert) {

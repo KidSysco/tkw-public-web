@@ -16,6 +16,7 @@ body {
 }
 
 
+
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
@@ -173,6 +174,11 @@ body {
 
 
 /***** Spinner CSS ******/
+
+#FetchingData{
+    border: 0 solid red;
+    padding-bottom: 95px;
+}
 
 .spinner {
     margin: 100px auto 0;
