@@ -1,18 +1,16 @@
 {
-  "apps": [
-    {
-      "name": "tkw-public-web",
-      "script": "server.js",
-      "args": [],
-      "watch": true,
-      "ignore_watch": [
-        "node_modules"
-      ],
-      "watch_options": {
-        "followSymlinks": false,
-        "usePolling": true,
-        "interval": 400
-      }
-    }
-  ]
+    "apps": [{
+        "name": "tkw-public-web",
+        "script": "start.js",
+        "args": [],
+        "watch": true,
+        "ignore_watch": [
+            "node_modules"
+        ],
+        "watch_options": {
+            "followSymlinks": false,
+            "usePolling": true,
+            "interval": 400
+        }
+    }]
 }

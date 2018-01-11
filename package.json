@@ -6,7 +6,8 @@
     "author": "KidSysco",
     "license": "MIT",
     "scripts": {
-        "start": "node server.js"
+        "start": "node start.js",
+        "test": "mocha --exit"
     },
     "dependencies": {
         "body-parser": "^1.18.2",
@@ -18,7 +19,7 @@
         "node": "9.2.1"
     },
     "devDependencies": {
-        "mocha": "^4.0.1",
+        "mocha": "^4.1.0",
         "qunit": "^2.4.1"
     }
 }

@@ -1,13 +1,11 @@
 {
-    "apps": [
-      {
+    "apps": [{
         "name": "tkw-public-web",
-        "script": "server.js",
+        "script": "start.js",
         "args": [],
         "watch": false,
         "ignore_watch": [
-          "node_modules"
+            "node_modules"
         ]
-      }
-    ]
-  }
+    }]
+}
