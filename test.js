@@ -48,7 +48,7 @@ describe('HTTP Server Tests', function() {
     describe(rootUrl + 'index.htm', function() {
         it('Should respond with 302 redirect.', function(done) {
             http.get(rootUrl + 'index.htm', function(response) {
-                assert.equal(response.statusCode, 309);
+                assert.equal(response.statusCode, 302);
                 done();
             });
         });
