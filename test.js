@@ -6,7 +6,7 @@ var express = require('express');
 var port = testServer();
 var rootUrl = 'http://127.0.0.1:' + port + '/';
 
-console.log('Listening on port ' + port);
+console.log('Mocha Test Server listening on port ' + port);
 
 // This test should always pass, it proves that Node is running prior to testing.
 describe('Node Tests', function() {
