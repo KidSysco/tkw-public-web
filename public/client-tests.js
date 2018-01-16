@@ -1,6 +1,8 @@
 var func = 'function',
     click = $.Event('click');
 
+console.log('Starting the client-side qUnit tests.');
+
 QUnit.test("JavaScript Library Status", function(assert) {
     var isBootStrapModalEnabled = (typeof $().modal == func),
         isjQueryEnabled = (typeof jQuery != 'undefined'),
@@ -47,7 +49,7 @@ QUnit.test("Application UI Unit Tests", function(assert) {
         appFormModal = $('#ApplicationModal');
 
     openAppFormLink.trigger(click);
-    assert.equal(appFormModal.hasClass('show'), false, 'The modal is showing after clicking the #OpenApplicationFormLink button.');
+    assert.equal(appFormModal.hasClass('show'), true, 'The modal is showing after clicking the #OpenApplicationFormLink button.');
 
     appFormModal.trigger(click);
     assert.equal(appFormModal.hasClass('show'), false, 'The modal is hidden after clicking outside the modal window.');

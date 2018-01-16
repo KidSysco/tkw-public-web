@@ -40,9 +40,18 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress'],
+        reporters: ['spec'],
+        specReporter: {
+            maxLogLines: 5,             // limit number of lines logged per test
+            suppressErrorSummary: false, // do not print error summary
+            suppressFailed: false,      // do not print information about failed tests
+            suppressPassed: false,      // do not print information about passed tests
+            suppressSkipped: false,      // do not print information about skipped tests
+            showSpecTiming: true,      // print the time elapsed for each spec
+            failFast: true              // test would finish with error when a first fail occurs. 
+          },
 
-        plugins: ['karma-qunit', 'karma-phantomjs-launcher', 'karma-html2js-preprocessor'],
+        plugins: ['karma-qunit', 'karma-phantomjs-launcher', 'karma-html2js-preprocessor', 'karma-spec-reporter'],
         // web server port
         port: 9876,
 
