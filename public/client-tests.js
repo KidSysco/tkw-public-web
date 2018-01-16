@@ -7,8 +7,8 @@ QUnit.test("JavaScript Library Status", function(assert) {
         isVueEnabled = (typeof Vue) === func;
 
     assert.ok(true, 'qUnit is installed and running.');
-    assert.equal(isBootStrapModalEnabled, true, 'jQuery is installed and running. Version ' + $.fn.jquery);
-    assert.equal(isjQueryEnabled, true, 'The Bootstrap Modal code is installed and running.');
+    assert.equal(isjQueryEnabled, true, 'jQuery is installed and running. Version ' + $.fn.jquery);
+    assert.equal(isBootStrapModalEnabled, true, 'The Bootstrap Modal code is installed and running.');
     assert.equal(isVueEnabled, true, 'Vue.js is installed and running.');
 });
 

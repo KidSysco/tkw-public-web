@@ -1,0 +1,1 @@
+document.body.innerHTML = __html__['index.template.html'];

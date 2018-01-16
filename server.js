@@ -9,7 +9,7 @@ module.exports = function() {
         renderer = require('vue-server-renderer').createRenderer({ template: require('fs').readFileSync('./index.template.html', 'utf-8') });
 
     // Enable this to simulate production mode.
-    // process.env.NODE_ENV = 'production';
+    //process.env.NODE_ENV = 'production';
 
     // Set the port in Express to save it for later.
     server.set('port', (process.env.PORT || port));
