@@ -1,6 +1,8 @@
 // Karma configuration
 // Generated on Thu Jan 11 2018 13:09:30 GMT-0600 (Central Standard Time)
 
+process.env.CHROME_BIN = require('puppeteer').executablePath();
+
 module.exports = function(config) {
     config.set({
 
@@ -51,7 +53,7 @@ module.exports = function(config) {
             failFast: true              // test would finish with error when a first fail occurs. 
           },
 
-        plugins: ['karma-qunit', 'karma-phantomjs-launcher', 'karma-html2js-preprocessor', 'karma-spec-reporter'],
+        plugins: ['karma-qunit', 'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-safari-launcher', 'karma-firefox-launcher', 'karma-ie-launcher', 'karma-html2js-preprocessor' , 'karma-spec-reporter'],
         // web server port
         port: 9876,
 
@@ -71,7 +73,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
+        browsers: ['PhantomJS','ChromeHeadless'],
 
 
         // Continuous Integration mode

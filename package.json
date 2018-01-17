@@ -15,10 +15,7 @@
     },
     "dependencies": {
         "body-parser": "^1.18.2",
-        "bootstrap": "^4.0.0-beta.2",
         "express": "^4.16.2",
-        "jquery": "^3.2.1",
-        "tether": "^1.4.3",
         "vue": "^2.5.13",
         "vue-server-renderer": "^2.5.13"
     },
@@ -28,14 +25,18 @@
     "devDependencies": {
         "mocha": "^4.1.0",
         "karma": "^2.0.0",
+        "karma-html2js-preprocessor": "^1.1.0",
         "karma-phantomjs-launcher": "^1.0.4",
         "karma-chrome-launcher": "^2.2.0",
         "karma-firefox-launcher": "^1.1.0",
-        "karma-html2js-preprocessor": "^1.1.0",
         "karma-ie-launcher": "^1.0.0",
-        "karma-qunit": "^1.2.1",
         "karma-safari-launcher": "^1.0.0",
+        "karma-qunit": "^1.2.1",
         "karma-spec-reporter": "0.0.32",
+        "bootstrap": "^4.0.0-beta.2",
+        "jquery": "^3.2.1",
+        "tether": "^1.4.3",
+        "puppeteer": "^1.0.0",
         "qunitjs": "^2.4.1"
     }
 }
